@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+import sys
+import pycurl
+import re
+import time
+import io
+
+url = sys.argv[1]
+
+prev = None
+hi = None
+while True:
+    import subprocess
+    p = subprocess.Popen(['curl', '-b', '.cookietmp', '-c', '.cookietmp', "{}".format(url), '--silent'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    body, _ = p.communicate()
+    body = body.decode('utf-8')
+
+    CASE_RE = 'Test case (.*?)/(.*?): (.*?)"'
+    for match in re.finditer(CASE_RE, body):
+        case = int(match.group(1))
+        total = int(match.group(2))
+        status = match.group(3)
+        if hi == None:
+            hi = 0
+            print("Number of cases:", total)
+        if case > hi and status != 'not checked':
+            hi = case
+            print("Case {}/{}: {}".format(case, total, status))
+
+    STATUS_RE = '<td class="status.*?"><span class=".*?><i.*?/i>(.*?)</span>'
+    match = re.search(STATUS_RE, body)
+    status = match.group(1)
+    if status != prev:
+        print("Status:", status)
+        prev = status
+    if status in ['Accepted', 'Time Limit Exceeded', 'Run Time Error', 'Wrong Answer']:
+        break
+
+    time.sleep(0.1)

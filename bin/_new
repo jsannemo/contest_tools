@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ext=${2-cpp}
+template=$(awk -F "=" '/template_'$ext'/ {print $2}' ~/.contestrc)
+
+mkdir $1
+cd $1
+samples $1
+cp $template $1.$ext 
+echo $1

@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+import sys
+import zipfile
+import io
+import requests
+import os
+import shutil
+
+try:
+    shutil.rmtree("in")
+    shutil.rmtree("ans")
+except: pass
+os.mkdir("in")
+os.mkdir("ans")
+
+URL = "https://open.kattis.com/problems/{}/file/statement/samples.zip"
+problem = sys.argv[1]
+
+zipurl = URL.format(problem)
+request = requests.get(zipurl)
+with zipfile.ZipFile(io.BytesIO(request.content)) as zfile:
+    inname = 1
+    ansname = 1
+    for sample in zfile.namelist():
+        if sample.endswith(".in"):
+            filename = "in/{}".format(inname)
+            f = open(filename, "wb")
+            f.write(zfile.open(sample).read())
+            f.close()
+            inname += 1
+        if sample.endswith(".ans"):
+            filename = "ans/{}".format(ansname)
+            f = open(filename, "wb")
+            f.write(zfile.open(sample).read())
+            f.close()
+            ansname += 1

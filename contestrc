@@ -1,0 +1,8 @@
+# Kattis settings: https://open.kattis.com/download/kattisrc
+[open.kattis.com]
+username = insert_username
+token = insert_token
+
+[general]
+template_cpp = /path/to/templatea
+cpp_compile = g++ -Wall -std=gnu++11 -g -Wconversion -ftrapv -Wfatal-errors -fsanitize=undefined -D_GLIBCXX_DEBUG
