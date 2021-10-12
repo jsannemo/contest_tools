@@ -4,5 +4,8 @@ username = insert_username
 token = insert_token
 
 [general]
-template_cpp = /path/to/templatea
-cpp_compile = g++ -Wall -std=gnu++11 -g -Wconversion -ftrapv -Wfatal-errors -fsanitize=undefined -D_GLIBCXX_DEBUG
+cpp_compile=g++ -Wall -Wconversion -Wfatal-errors -g -std=c++14 -fsanitize=undefined,address
+py_run=pypy3
+
+cpp_template=template.cpp
+py_template=template.py

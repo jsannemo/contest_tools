@@ -1,0 +1,17 @@
+script_path=`realpath $_`
+
+function ct() {
+  ct_path=$(dirname $script_path)/ct.py
+
+  if [[ $# -gt 0 ]] && [[ $1 = "new" ]]
+  then
+    new_path=`python3 $ct_path $*`
+    if [[ $? = 0 ]]
+    then
+      cd $new_path
+      vim `find -name "solution.*"`
+    fi
+  else
+    python3 $ct_path $*
+  fi
+}
