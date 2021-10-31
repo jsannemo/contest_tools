@@ -132,7 +132,7 @@ def watch(submission_id):
             if submission_status == "Accepted":
                 stdscr.addstr(0, 8, f"{submission_status} \u2714", curses.color_pair(1))
             elif submission_status_id >= 9:
-                stdscr.addstr(0, 8, f"{submission-status} \u2718", curses.color_pair(2))
+                stdscr.addstr(0, 8, f"{submission_status} \u2718", curses.color_pair(2))
             elif tc_statuses:
                 for tc, tc_status in enumerate(tc_statuses):
                     if tc_status == "not checked":
